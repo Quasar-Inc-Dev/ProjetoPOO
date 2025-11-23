@@ -13,11 +13,13 @@ public class Paciente extends Pessoa{
     private double altura;
     private double peso;
     private ArrayList<Consulta> consultas;
+ 
 
     public Paciente(String cpf, String nome, LocalDate dataNascimento) {
         super(cpf, nome);
         this.dataNascimento = dataNascimento;
         consultas = new ArrayList<Consulta>();
+ 
     }
 
     public double getAltura() {
@@ -36,21 +38,20 @@ public class Paciente extends Pessoa{
         this.peso = peso;
     }
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
+    public String getDataNascimento() {
+        return dataNascimento.toString();
     }
     
     public double calcIMC(){
         return peso / (altura * altura);
     }
     
-    public long calcIdade(LocalDate dataNascimento){
-        return ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
+    public int calcIdade(LocalDate dataAtual){
+        return (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
     }
     
     public void addConsulta(Consulta c){
         consultas.add(c);
-        c.setPaciente(this);
     }
     
 }
