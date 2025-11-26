@@ -16,8 +16,7 @@ public class Consulta {
     private String data;
     private double valor;
     
-    private Medico medico;
-    private Paciente paciente;
+    private Medico medico; 
     
     private ArrayList<Medicacao> medicacoes;
     private ArrayList<Exame> exames;
@@ -31,10 +30,6 @@ public class Consulta {
     
     public void setMedico(Medico medico) {
         this.medico = medico;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
     }
 
     public int getCodigo() {
@@ -55,7 +50,6 @@ public class Consulta {
     
     public void addMedicacao(Medicacao m){
         medicacoes.add(m);
-        m.setConsulta(this);
     }
     
     public void addExame(Exame e){
