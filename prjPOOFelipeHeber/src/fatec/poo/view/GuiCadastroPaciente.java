@@ -37,11 +37,9 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        inputDataNascimento = new javax.swing.JTextField();
         inputTelefone = new javax.swing.JTextField();
         inputEndereco = new javax.swing.JTextField();
         inputNome = new javax.swing.JTextField();
-        inputCpf = new javax.swing.JTextField();
         inputAltura = new javax.swing.JTextField();
         inputPeso = new javax.swing.JTextField();
         btnConsultar = new javax.swing.JButton();
@@ -49,6 +47,8 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        inputCpf = new javax.swing.JFormattedTextField();
+        inputDataNascimento = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastrar Paciente");
@@ -100,17 +100,6 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
                         .addComponent(jLabel7)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(inputDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                                .addComponent(inputTelefone)
-                                .addComponent(inputCpf)
-                                .addComponent(inputAltura)
-                                .addComponent(inputPeso))
-                            .addComponent(inputNome, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(inputEndereco)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnInserir)
                         .addGap(18, 18, 18)
@@ -118,7 +107,17 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSair)))
+                        .addComponent(btnSair))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputTelefone)
+                            .addComponent(inputAltura)
+                            .addComponent(inputPeso)
+                            .addComponent(inputNome, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                            .addComponent(inputEndereco)
+                            .addComponent(inputCpf)
+                            .addComponent(inputDataNascimento))))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -176,8 +175,8 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnSair;
     private javax.swing.JTextField inputAltura;
-    private javax.swing.JTextField inputCpf;
-    private javax.swing.JTextField inputDataNascimento;
+    private javax.swing.JFormattedTextField inputCpf;
+    private javax.swing.JFormattedTextField inputDataNascimento;
     private javax.swing.JTextField inputEndereco;
     private javax.swing.JTextField inputNome;
     private javax.swing.JTextField inputPeso;

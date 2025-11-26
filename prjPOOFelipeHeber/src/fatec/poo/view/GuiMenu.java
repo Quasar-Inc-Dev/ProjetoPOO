@@ -97,7 +97,7 @@ public class GuiMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void marcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcarConsultaActionPerformed
-        // TODO add your handling code here:
+        new GuiMarcarNovaConsulta().setVisible(true);
     }//GEN-LAST:event_marcarConsultaActionPerformed
 
     private void cadastrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPacienteActionPerformed
