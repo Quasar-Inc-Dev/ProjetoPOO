@@ -41,6 +41,10 @@ public class Paciente extends Pessoa{
     public String getDataNascimento() {
         return dataNascimento.toString();
     }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
     
     public double calcIMC(){
         return peso / (altura * altura);

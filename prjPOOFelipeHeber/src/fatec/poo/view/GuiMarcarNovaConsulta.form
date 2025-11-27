@@ -26,37 +26,43 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="inputCodigo" min="-2" pref="57" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="inputCpfMedico" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnInserir" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnConsultar" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="inputCpfPaciente" pref="85" max="32767" attributes="0"/>
-                              <Component id="inputData" max="32767" attributes="0"/>
-                              <Component id="inputValor" max="32767" attributes="0"/>
+                          <Component id="inputValor" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="inputCpfMedico" alignment="0" pref="93" max="32767" attributes="0"/>
+                              <Component id="inputCpfPaciente" alignment="0" max="32767" attributes="0"/>
+                              <Component id="inputData" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btnAlterar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnSair" min="-2" pref="87" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnCpfMedico" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCpfPaciente" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -64,21 +70,11 @@
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblCpfMedico" max="32767" attributes="0"/>
-                          <Component id="lblCpfPaciente" pref="116" max="32767" attributes="0"/>
+                          <Component id="lblCpfPaciente" min="-2" pref="116" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnInserir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnAlterar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnSair" min="-2" pref="87" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace pref="59" max="32767" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,16 +89,16 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="inputCpfMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCpfMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblCpfMedico" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="inputCpfMedico" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="inputCpfPaciente" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCpfPaciente" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblCpfPaciente" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="inputCpfPaciente" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -140,27 +136,15 @@
         <Property name="text" type="java.lang.String" value="CPF M&#xe9;dico"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="inputCpfMedico">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputCpfMedicoActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="CPF Paciente"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="inputCpfPaciente">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputCpfPacienteActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Data"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="inputData">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
@@ -215,6 +199,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Inserir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAlterar">
       <Properties>
@@ -239,6 +226,12 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="inputData">
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="inputCpfPaciente">
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="inputCpfMedico">
     </Component>
   </SubComponents>
 </Form>
