@@ -7,7 +7,7 @@ package fatec.poo.model;
 
 /**
  *
- * @author felip
+ * @author felip & Heber
  */
 public class Pessoa {
     private String cpf;
@@ -24,6 +24,10 @@ public class Pessoa {
         return endereco;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
@@ -45,19 +49,18 @@ public class Pessoa {
     }
     
     public static boolean validarCpf(String cpf) {
+       cpf = cpf.replaceAll("[^0-9]", "");
        int primeiroDigito = 0;
        int segundoDigito = 0;
-        
+       
        //Verificação dos digitos iguais usando Regex, recebendo um digito(d) inteiro(0-9) e repete(l) por 10 vezes
-        if (cpf.matches("(\\d\\1{10}")) {
+        if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }
         
         for(int i = 0; i < 9; i++){
-            int peso = 1;
-            int digito = Integer.parseInt(cpf.substring(i, i++));
-            primeiroDigito += digito * (i * peso);
-            peso++;
+            int digito = Integer.parseInt(cpf.substring(i, i+1));
+            primeiroDigito += digito * (i + 1);
         }
         
         primeiroDigito = primeiroDigito%11;
@@ -66,13 +69,13 @@ public class Pessoa {
         }
         
         for(int i = 0; i < 9; i++){
-            int peso = 11;
-            int digito = Integer.parseInt(cpf.substring(i, i++));
-            segundoDigito += digito * (i * peso);
-            peso--;
+            int digito = Integer.parseInt(cpf.substring(i, i+1));
+            segundoDigito += digito * (11 - i);
         }
         
-        segundoDigito = (segundoDigito*10)%11;
+        segundoDigito += primeiroDigito * 2;
+
+        segundoDigito = (segundoDigito * 10) % 11;
         if (segundoDigito == 10) {
             segundoDigito = 0;
         }
@@ -80,7 +83,7 @@ public class Pessoa {
         int primeiroDigitoFinal = Integer.parseInt(cpf.substring(9, 10));
         int segundoDigitoFinal = Integer.parseInt(cpf.substring(10, 11));
         
-        if (primeiroDigito == primeiroDigitoFinal || segundoDigito == segundoDigitoFinal){
+        if (primeiroDigito == primeiroDigitoFinal && segundoDigito == segundoDigitoFinal){
             return true;
         }
         return false;
