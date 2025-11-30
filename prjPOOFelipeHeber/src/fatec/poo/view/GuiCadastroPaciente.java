@@ -237,20 +237,20 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
         if (cpfLimpo.length() < 11) {
             JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
-            inputCpf.requestFocus(); 
-            return; 
+            inputCpf.requestFocus();
+            return;
         }
-        
+
         paciente = null;
-        
+
         if (!Pessoa.validarCpf(inputCpf.getText())) {
             JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-            inputCpf.requestFocus(); 
+            inputCpf.requestFocus();
             return;
         }
         paciente = daoPaciente.consultarPaciente(cpfLimpo);
-        
-        if(paciente == null){
+
+        if (paciente == null) {
             inputCpf.setEnabled(false);
             inputNome.setEnabled(true);
             inputEndereco.setEnabled(true);
@@ -258,7 +258,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             inputDataNascimento.setEnabled(true);
             inputAltura.setEnabled(true);
             inputPeso.setEnabled(true);
-            
+
             btnConsultar.setEnabled(false);
             btnInserir.setEnabled(true);
         } else {
@@ -269,9 +269,9 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             LocalDate dataObj = LocalDate.parse(paciente.getDataNascimento());
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             inputDataNascimento.setText(dataObj.format(dtf));
-            inputAltura.setText(String.valueOf(paciente.getAltura()));
-            inputPeso.setText(String.valueOf(paciente.getPeso()));
-            
+            inputAltura.setText(String.format("%.2f", paciente.getAltura()).replace(".", ","));
+            inputPeso.setText(String.format("%.2f", paciente.getPeso()).replace(".", ","));
+
             inputCpf.setEnabled(false);
             inputNome.setEnabled(true);
             inputEndereco.setEnabled(true);
@@ -279,14 +279,14 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             inputDataNascimento.setEnabled(true);
             inputAltura.setEnabled(true);
             inputPeso.setEnabled(true);
-            
+
             inputNome.requestFocus();
-            
+
             btnConsultar.setEnabled(false);
             btnInserir.setEnabled(false);
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
-            
+
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -303,9 +303,9 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         paciente.setPeso(Double.parseDouble(inputPeso.getText().replace(",", ".")));
 
         daoPaciente.inserirPaciente(paciente);
-        
+
         JOptionPane.showMessageDialog(this, "Inserido com Sucesso!");
-        
+
         inputCpf.setText("");
         inputNome.setText("");
         inputEndereco.setText("");
@@ -313,6 +313,24 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         inputTelefone.setText("");
         inputAltura.setText("");
         inputPeso.setText("");
+
+        inputCpf.setEnabled(true);
+        inputCpf.requestFocus();
+
+        btnAlterar.setEnabled(false);
+        btnConsultar.setEnabled(true);
+
+        inputCpf.setEnabled(true);
+        inputNome.setEnabled(false);
+        inputEndereco.setEnabled(false);
+        inputTelefone.setEnabled(false);
+        inputDataNascimento.setEnabled(false);
+        inputAltura.setEnabled(false);
+        inputPeso.setEnabled(false);
+
+        btnConsultar.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -332,41 +350,52 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Confirmar Alteração?") == 0){
-        
-        paciente.setNome(inputNome.getText());
-        paciente.setEndereco(inputEndereco.getText());
-        
-        paciente.setTelefone(inputTelefone.getText().replaceAll("[^0-9]", ""));
+        if (JOptionPane.showConfirmDialog(null, "Confirmar Alteração?") == 0) {
 
-        paciente.setAltura(Double.parseDouble(inputAltura.getText().replace(",", ".")));
-        paciente.setPeso(Double.parseDouble(inputPeso.getText().replace(",", ".")));
+            paciente.setNome(inputNome.getText());
+            paciente.setEndereco(inputEndereco.getText());
 
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataNova = LocalDate.parse(inputDataNascimento.getText(), formatador);
-        
-        paciente.setDataNascimento(dataNova);
-        
-        paciente.setTelefone(inputTelefone.getText());
-        
-        paciente.setAltura(Double.parseDouble(inputAltura.getText()));
-        paciente.setPeso(Double.parseDouble(inputPeso.getText()));
-        
-        inputCpf.setEnabled(false);
-        inputNome.requestFocus();
-        btnConsultar.setEnabled(true);
-        btnInserir.setEnabled(false);
-        btnAlterar.setEnabled(false);
-        btnExcluir.setEnabled(false);
-        
-        daoPaciente.atualizarPaciente(paciente);
+            paciente.setTelefone(inputTelefone.getText().replaceAll("[^0-9]", ""));
+
+            paciente.setAltura(Double.parseDouble(inputAltura.getText().replace(",", ".")));
+            paciente.setPeso(Double.parseDouble(inputPeso.getText().replace(",", ".")));
+
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNova = LocalDate.parse(inputDataNascimento.getText(), formatador);
+
+            paciente.setDataNascimento(dataNova);
+
+            paciente.setTelefone(inputTelefone.getText());
+
+            inputCpf.setEnabled(false);
+            inputNome.requestFocus();
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+
+            daoPaciente.atualizarPaciente(paciente);
+
+            inputCpf.setText("");
+            inputNome.setText("");
+            inputEndereco.setText("");
+            inputDataNascimento.setText("");
+            inputTelefone.setText("");
+            inputAltura.setText("");
+            inputPeso.setText("");
+
+            inputCpf.setEnabled(true);
+            inputCpf.requestFocus();
         }
+
+        btnAlterar.setEnabled(false);
+        btnConsultar.setEnabled(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-            if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?")== 0){
+        if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0) {
             daoPaciente.deletarPaciente(paciente);
-            
+
             inputCpf.setText("");
             inputNome.setText("");
             inputEndereco.setText("");
@@ -374,7 +403,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             inputDataNascimento.setText("");
             inputAltura.setText("");
             inputPeso.setText("");
-            
+
             inputCpf.setEnabled(true);
             inputNome.setEnabled(false);
             inputEndereco.setEnabled(false);
@@ -382,35 +411,33 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             inputDataNascimento.setEnabled(false);
             inputAltura.setEnabled(false);
             inputPeso.setEnabled(false);
-            
+
             btnConsultar.setEnabled(true);
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-            
+
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
-    
-    public void habilitarMascaras(){
-        try{
+
+    public void habilitarMascaras() {
+        try {
             MaskFormatter maskCpf = new MaskFormatter("###.###.###-##");
             maskCpf.setPlaceholderCharacter('_');
             maskCpf.install(inputCpf);
-            
+
             MaskFormatter maskData = new MaskFormatter("##/##/####");
             maskData.setPlaceholderCharacter('_');
             maskData.install(inputDataNascimento);
-            
+
             MaskFormatter maskTel = new MaskFormatter("(##) #####-####");
             maskTel.setPlaceholderCharacter('_');
             maskTel.install(inputTelefone);
-            
-            
-            
+
         } catch (ParseException ex) {
             System.out.println("Erro na máscara:" + ex.getMessage());
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
