@@ -55,7 +55,7 @@ public class DaoMedico {
         }
     }
     
-    public void deletarPaciente (Medico medico) {
+    public void deletarMedico (Medico medico) {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("DELETE FROM tbMedico WHERE CPF = ?");
