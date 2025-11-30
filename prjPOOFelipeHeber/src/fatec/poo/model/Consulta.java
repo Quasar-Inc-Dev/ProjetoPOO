@@ -12,12 +12,13 @@ import java.util.ArrayList;
  * @author felip
  */
 public class Consulta {
+
     private int codigo;
     private String data;
     private double valor;
-    
-    private Medico medico; 
-    
+
+    private Medico medico;
+
     private ArrayList<Medicacao> medicacoes;
     private ArrayList<Exame> exames;
 
@@ -27,9 +28,13 @@ public class Consulta {
         medicacoes = new ArrayList<Medicacao>();
         exames = new ArrayList<Exame>();
     }
-    
+
     public Medico getMedico() {
         return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
     }
 
     public int getCodigo() {
@@ -47,23 +52,23 @@ public class Consulta {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
-    public void addMedicacao(Medicacao m){
+
+    public void addMedicacao(Medicacao m) {
         medicacoes.add(m);
     }
-    
-    public void addExame(Exame e){
+
+    public void addExame(Exame e) {
         exames.add(e);
         e.setConsulta(this);
     }
-    
-    public double calcValorTotalPagar(){
+
+    public double calcValorTotalPagar() {
         double total = valor;
-        
-        for(Exame exame : exames){
+
+        for (Exame exame : exames) {
             total += exame.getValor();
         }
-        
+
         return total;
     }
 }

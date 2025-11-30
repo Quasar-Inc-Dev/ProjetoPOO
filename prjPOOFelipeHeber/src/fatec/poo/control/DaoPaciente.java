@@ -37,6 +37,7 @@ public class DaoPaciente {
             ps.setDouble(7, paciente.getPeso());
             
             ps.execute();
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
@@ -68,6 +69,7 @@ public class DaoPaciente {
             ps.setString(1, paciente.getCpf());
             
             ps.execute();
+            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
