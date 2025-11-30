@@ -266,9 +266,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             inputNome.setText(paciente.getNome());
             inputEndereco.setText(paciente.getEndereco());
             inputTelefone.setText(paciente.getTelefone());
-            LocalDate dataObj = LocalDate.parse(paciente.getDataNascimento());
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            inputDataNascimento.setText(dataObj.format(dtf));
+            inputDataNascimento.setText(paciente.getDataNascimento());
             inputAltura.setText(String.format("%.2f", paciente.getAltura()).replace(".", ","));
             inputPeso.setText(String.format("%.2f", paciente.getPeso()).replace(".", ","));
 
