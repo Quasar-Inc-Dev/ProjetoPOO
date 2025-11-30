@@ -28,8 +28,8 @@ public class Consulta {
         exames = new ArrayList<Exame>();
     }
     
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public Medico getMedico() {
+        return medico;
     }
 
     public int getCodigo() {
