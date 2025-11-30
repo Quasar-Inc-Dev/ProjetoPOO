@@ -47,6 +47,11 @@ public class GuiMenu extends javax.swing.JFrame {
         jMenu1.setText("Cadastro");
 
         cadastrarMedico.setText("Médico");
+        cadastrarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarMedicoActionPerformed(evt);
+            }
+        });
         jMenu1.add(cadastrarMedico);
 
         cadastrarPaciente.setText("Paciente");
@@ -103,6 +108,10 @@ public class GuiMenu extends javax.swing.JFrame {
     private void cadastrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPacienteActionPerformed
        new GuiCadastroPaciente().setVisible(true);
     }//GEN-LAST:event_cadastrarPacienteActionPerformed
+
+    private void cadastrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarMedicoActionPerformed
+        new GuiCadastroMedico().setVisible(true);
+    }//GEN-LAST:event_cadastrarMedicoActionPerformed
 
     /**
      * @param args the command line arguments
