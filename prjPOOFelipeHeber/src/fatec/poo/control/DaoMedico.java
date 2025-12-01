@@ -24,13 +24,13 @@ public class DaoMedico {
     public void inserirMedico (Medico medico){
         PreparedStatement ps = null;
         try{
-            ps = con.prepareStatement("INSERT INTO tbMedico(CRM, CPF, NOME, ESPECIALIDADE, ENDERECO, TELEFONE) VALUES(?, ?, ?, ?, ?, ?)");
-            ps.setString(1, medico.getCrm());
-            ps.setString(2, medico.getCpf());
-            ps.setString(3, medico.getNome());
-            ps.setString(4, medico.getEspecialidade());
-            ps.setString(5, medico.getEndereco());
-            ps.setString(6, medico.getTelefone());
+            ps = con.prepareStatement("INSERT INTO tbMedico(CPF, NOME, ENDERECO, TELEFONE, CRM, ESPECIALIDADE) VALUES(?, ?, ?, ?, ?, ?)");
+            ps.setString(1, medico.getCpf());
+            ps.setString(2, medico.getNome());
+            ps.setString(3, medico.getEndereco());
+            ps.setString(4, medico.getTelefone());
+            ps.setString(5, medico.getCrm());
+            ps.setString(6, medico.getEspecialidade());
             
             ps.execute();
         } catch (SQLException ex) {
@@ -41,13 +41,14 @@ public class DaoMedico {
     public void atualizarMedico (Medico medico) {
         PreparedStatement ps = null;
         try{
-            ps = con.prepareStatement("UPDATE tbMedico SET CRM = ?, CPF = ?, NOME = ?, ESPECIALIDADE = ?, ENDERECO = ?, TELEFONE = ? WHERE CPF = ?");
-            ps.setString(1, medico.getCrm());
-            ps.setString(2, medico.getCpf());
-            ps.setString(3, medico.getNome());
-            ps.setString(4, medico.getEspecialidade());
-            ps.setString(5, medico.getEndereco());
-            ps.setString(6, medico.getTelefone());
+            ps = con.prepareStatement("UPDATE tbMedico SET NOME = ?, ENDERECO = ?, TELEFONE = ?, CRM = ?, ESPECIALIDADE = ? WHERE CPF = ?");
+            ps.setString(1, medico.getNome());
+            ps.setString(2, medico.getEndereco());
+            ps.setString(3, medico.getTelefone());
+            ps.setString(4, medico.getCrm());
+            ps.setString(5, medico.getEspecialidade());
+            
+            ps.setString(6, medico.getCpf());
             
             ps.execute();
         } catch (SQLException ex) {
@@ -72,12 +73,12 @@ public class DaoMedico {
         
         PreparedStatement ps = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM tbMedico WEHERE CPF = ?");
+            ps = con.prepareStatement("SELECT * FROM tbMedico WHERE CPF = ?");
             ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
             
             if(rs.next()) {
-                m = new Medico(rs.getString("CPF"), rs.getString("NOME"), rs.getString("ESPECIALIDADE"), rs.getString("CRM"));
+                m = new Medico(rs.getString("CPF"), rs.getString("NOME"), rs.getString("CRM"), rs.getString("ESPECIALIDADE"));
                 m.setEndereco(rs.getString("ENDERECO"));
                 m.setTelefone(rs.getString("TELEFONE"));
             }
