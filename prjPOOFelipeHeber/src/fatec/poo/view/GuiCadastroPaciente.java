@@ -13,8 +13,6 @@ import java.awt.Toolkit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
-import javax.swing.text.MaskFormatter;
-import java.text.ParseException;
 
 /**
  *
@@ -28,7 +26,6 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     public GuiCadastroPaciente() {
         initComponents();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/fatec/poo/view/icons/LogoPokecenter.png")));
-        habilitarMascaras();
     }
 
     /**
@@ -136,12 +133,22 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
             }
         });
 
+        try {
+            inputCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         inputCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputCpfActionPerformed(evt);
             }
         });
 
+        try {
+            inputDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         inputDataNascimento.setEnabled(false);
 
         inputTelefone.setEnabled(false);
@@ -416,25 +423,6 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
-
-    public void habilitarMascaras() {
-        try {
-            MaskFormatter maskCpf = new MaskFormatter("###.###.###-##");
-            maskCpf.setPlaceholderCharacter('_');
-            maskCpf.install(inputCpf);
-
-            MaskFormatter maskData = new MaskFormatter("##/##/####");
-            maskData.setPlaceholderCharacter('_');
-            maskData.install(inputDataNascimento);
-
-            MaskFormatter maskTel = new MaskFormatter("(##) #####-####");
-            maskTel.setPlaceholderCharacter('_');
-            maskTel.install(inputTelefone);
-
-        } catch (ParseException ex) {
-            System.out.println("Erro na máscara:" + ex.getMessage());
-        }
-    }
 
     /**
      * @param args the command line arguments

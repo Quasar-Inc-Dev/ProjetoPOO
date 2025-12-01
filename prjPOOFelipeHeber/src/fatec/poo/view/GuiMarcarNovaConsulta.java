@@ -13,10 +13,7 @@ import fatec.poo.model.Consulta;
 import fatec.poo.model.Medico;
 import fatec.poo.model.Paciente;
 import java.awt.Toolkit;
-import java.text.ParseException;
 import javax.swing.JOptionPane;
-import javax.swing.text.MaskFormatter;
-
 /**
  *
  * @author mhebe
@@ -29,7 +26,6 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
     public GuiMarcarNovaConsulta() {
         initComponents();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/fatec/poo/view/icons/LogoPokecenter.png")));
-        mascaras();
     }
 
     /**
@@ -144,10 +140,25 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
             }
         });
 
+        try {
+            inputData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         inputData.setEnabled(false);
 
+        try {
+            inputCpfPaciente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         inputCpfPaciente.setEnabled(false);
 
+        try {
+            inputCpfMedico.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         inputCpfMedico.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,19 +285,19 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         consulta = daoConsulta.consultarConsulta(Integer.valueOf(inputCodigo.getText()));
-
-        String cpfFormatado = inputCpfMedico.getText();
-        String cpfPuro = cpfFormatado.replace(".", "").replace("-", ""); // Remove . e -
-
-        // Usa o CPF limpo para consultar
-        medico = daoMedico.consultarMedico(cpfPuro);
+        System.out.println("consulta " + consulta);
 
         if (consulta == null) {
+            String cpfFormatado = inputCpfPaciente.getText();
+        String cpfPuro = cpfFormatado.replace(".", "").replace("-", "").replace("_", "").trim();
             inputCodigo.setEnabled(false);
             inputCpfMedico.setEnabled(true);
             btnCpfMedico.setEnabled(true);
             inputCpfMedico.requestFocus();
         } else {
+            String cpfFormatado = inputCpfMedico.getText();
+            String cpfPuro = cpfFormatado.replace(".", "").replace("-", "");
+            medico = daoMedico.consultarMedico(cpfPuro);
             inputCpfMedico.setText(consulta.getMedico().getCpf());
             lblCpfMedico.setText(consulta.getMedico().getNome());
             paciente = daoConsulta.buscarPacienteDaConsulta(Integer.valueOf(inputCodigo.getText()));
@@ -313,22 +324,23 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
         daoMedico = new DaoMedico(conex.abrirConxao());
 
         String cpfFormatado = inputCpfMedico.getText();
-        String cpfPuro = cpfFormatado.replace(".", "").replace("-", "");
+        String cpfPuro = cpfFormatado.replace(".", "").replace("-", "").replace("_", "").trim();
 
         medico = daoMedico.consultarMedico(cpfPuro);
+
         if (medico == null) {
             JOptionPane.showMessageDialog(this, "Médico não cadastrado");
             inputCpfMedico.requestFocus();
         } else {
             lblCpfMedico.setText(medico.getNome());
+
+            inputCpfMedico.setEnabled(false);
+            btnCpfMedico.setEnabled(false);
+
+            inputCpfPaciente.setEnabled(true);
+            btnCpfPaciente.setEnabled(true);
+            inputCpfPaciente.requestFocus();
         }
-
-        inputCpfMedico.setEnabled(false);
-        btnCpfMedico.setEnabled(false);
-
-        inputCpfPaciente.setEnabled(true);
-        btnCpfPaciente.setEnabled(true);
-        inputCpfPaciente.requestFocus();
     }//GEN-LAST:event_btnCpfMedicoActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -340,19 +352,27 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
 
     private void btnCpfPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCpfPacienteActionPerformed
         daoPaciente = new DaoPaciente(conex.abrirConxao());
-        paciente = daoPaciente.consultarPaciente(inputCpfPaciente.getText());
+
+        String cpfFormatado = inputCpfPaciente.getText();
+        String cpfPuro = cpfFormatado.replace(".", "").replace("-", "").replace("_", "").trim();
+
+        paciente = daoPaciente.consultarPaciente(cpfPuro);
+
         if (paciente == null) {
             JOptionPane.showMessageDialog(this, "Paciente não cadastrado");
-            inputCpfMedico.requestFocus();
+            inputCpfPaciente.requestFocus();
         } else {
             lblCpfPaciente.setText(paciente.getNome());
+
+            inputCpfPaciente.setEnabled(false); 
+            btnCpfPaciente.setEnabled(false);  
+
+            inputData.setEnabled(true);
+            inputValor.setEnabled(true);
+            inputData.requestFocus();
+
+            btnInserir.setEnabled(true);
         }
-
-        inputData.setEnabled(true);
-        inputValor.setEnabled(true);
-        inputData.requestFocus();
-
-        btnInserir.setEnabled(true);
     }//GEN-LAST:event_btnCpfPacienteActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -382,21 +402,6 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    public void mascaras() {
-        try {
-            MaskFormatter maskData = new MaskFormatter("##/##/####");
-            maskData.setPlaceholderCharacter('_');
-            maskData.install(inputData);
-
-            MaskFormatter maskCpf = new MaskFormatter("###.###.###-##");
-            maskCpf.setPlaceholderCharacter('_');
-            maskCpf.install(inputCpfMedico);
-            maskCpf.install(inputCpfPaciente);
-        } catch (ParseException ex) {
-            System.out.println("Erro na Mascara" + ex.getMessage());
-        }
-
-    }
     /**
      * @param args the command line arguments
      */

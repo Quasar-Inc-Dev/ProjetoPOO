@@ -6,7 +6,6 @@
 package fatec.poo.control;
 
 import fatec.poo.model.Consulta;
-import fatec.poo.model.Medico;
 import fatec.poo.model.Paciente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,7 +59,6 @@ public class DaoConsulta {
 
                 DaoMedico daoM = new DaoMedico(con);
                 c.setMedico(daoM.consultarMedico(rs.getString("MEDICO")));
-                Paciente p = consultarPaciente(rs.getString("PACIENTE"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -130,7 +128,7 @@ public class DaoConsulta {
         PreparedStatement ps = null;
         
         try {
-            ps = con.prepareStatement("SELECT PACIENTE FROM tblConsulta WHERE CODIGO = ?");
+            ps = con.prepareStatement("SELECT PACIENTE FROM tbConsulta WHERE CODIGO = ?");
             ps.setInt(1, codigoConsulta);
             ResultSet rs = ps.executeQuery();
             
