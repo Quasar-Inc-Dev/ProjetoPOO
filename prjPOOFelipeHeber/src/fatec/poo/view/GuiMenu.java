@@ -63,6 +63,11 @@ public class GuiMenu extends javax.swing.JFrame {
         jMenu1.add(cadastrarPaciente);
 
         sairMenuCadastro.setText("Sair");
+        sairMenuCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sairMenuCadastroActionPerformed(evt);
+            }
+        });
         jMenu1.add(sairMenuCadastro);
 
         jMenuBar1.add(jMenu1);
@@ -78,6 +83,11 @@ public class GuiMenu extends javax.swing.JFrame {
         jMenu2.add(marcarConsulta);
 
         marcarExame.setText("Marcar Exame");
+        marcarExame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcarExameActionPerformed(evt);
+            }
+        });
         jMenu2.add(marcarExame);
 
         prescreverMedicamento.setText("Prescrever Medicamento");
@@ -121,6 +131,14 @@ public class GuiMenu extends javax.swing.JFrame {
     private void prescreverMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prescreverMedicamentoActionPerformed
         new GuiPrescreverMedicacao().setVisible(true);
     }//GEN-LAST:event_prescreverMedicamentoActionPerformed
+
+    private void marcarExameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcarExameActionPerformed
+       new GuiMarcarExame().setVisible(true);
+    }//GEN-LAST:event_marcarExameActionPerformed
+
+    private void sairMenuCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairMenuCadastroActionPerformed
+        dispose();
+    }//GEN-LAST:event_sairMenuCadastroActionPerformed
 
     /**
      * @param args the command line arguments

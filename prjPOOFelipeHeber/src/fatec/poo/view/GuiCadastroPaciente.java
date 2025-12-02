@@ -321,7 +321,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
         inputCpf.setEnabled(true);
         inputCpf.requestFocus();
-
+        
         btnAlterar.setEnabled(false);
         btnConsultar.setEnabled(true);
 
@@ -332,7 +332,8 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         inputDataNascimento.setEnabled(false);
         inputAltura.setEnabled(false);
         inputPeso.setEnabled(false);
-
+        
+        btnInserir.setEnabled(false);
         btnConsultar.setEnabled(true);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
@@ -359,11 +360,6 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
             paciente.setNome(inputNome.getText());
             paciente.setEndereco(inputEndereco.getText());
-
-            paciente.setTelefone(inputTelefone.getText().replaceAll("[^0-9]", ""));
-
-            paciente.setAltura(Double.parseDouble(inputAltura.getText().replace(",", ".")));
-            paciente.setPeso(Double.parseDouble(inputPeso.getText().replace(",", ".")));
 
             DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataNova = LocalDate.parse(inputDataNascimento.getText(), formatador);

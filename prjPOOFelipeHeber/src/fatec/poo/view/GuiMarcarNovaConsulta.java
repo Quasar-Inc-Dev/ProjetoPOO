@@ -14,6 +14,7 @@ import fatec.poo.model.Medico;
 import fatec.poo.model.Paciente;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author mhebe
@@ -122,6 +123,11 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -254,6 +260,7 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         consulta = new Consulta(Integer.valueOf(inputCodigo.getText()), inputData.getText());
+        consulta.setValor(Double.parseDouble(inputValor.getText()));
         consulta.setMedico(medico);
         daoConsulta.inserirConsulta(consulta, paciente);
 
@@ -284,25 +291,23 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        consulta = daoConsulta.consultarConsulta(Integer.valueOf(inputCodigo.getText()));
-        System.out.println("consulta " + consulta);
+        int codigo = Integer.valueOf(inputCodigo.getText());
+
+        consulta = daoConsulta.consultarConsulta(codigo);
 
         if (consulta == null) {
-            String cpfFormatado = inputCpfPaciente.getText();
-        String cpfPuro = cpfFormatado.replace(".", "").replace("-", "").replace("_", "").trim();
             inputCodigo.setEnabled(false);
             inputCpfMedico.setEnabled(true);
             btnCpfMedico.setEnabled(true);
             inputCpfMedico.requestFocus();
         } else {
-            String cpfFormatado = inputCpfMedico.getText();
-            String cpfPuro = cpfFormatado.replace(".", "").replace("-", "");
-            medico = daoMedico.consultarMedico(cpfPuro);
             inputCpfMedico.setText(consulta.getMedico().getCpf());
             lblCpfMedico.setText(consulta.getMedico().getNome());
-            paciente = daoConsulta.buscarPacienteDaConsulta(Integer.valueOf(inputCodigo.getText()));
+
+            paciente = daoConsulta.buscarPacienteDaConsulta(codigo);
             inputCpfPaciente.setText(paciente.getCpf());
             lblCpfPaciente.setText(paciente.getNome());
+
             inputData.setText(consulta.getData());
             inputValor.setText(String.valueOf(consulta.getValor()));
 
@@ -364,8 +369,8 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
         } else {
             lblCpfPaciente.setText(paciente.getNome());
 
-            inputCpfPaciente.setEnabled(false); 
-            btnCpfPaciente.setEnabled(false);  
+            inputCpfPaciente.setEnabled(false);
+            btnCpfPaciente.setEnabled(false);
 
             inputData.setEnabled(true);
             inputValor.setEnabled(true);
@@ -383,6 +388,15 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, "Confirmar Exclusão?") == 0) {
             daoConsulta.deletarConsulta(consulta);
 
+            
+            inputCodigo.setText("");
+            inputCpfMedico.setText("");
+            lblCpfMedico.setText("");
+            inputCpfPaciente.setText("");
+            lblCpfPaciente.setText("");
+            inputData.setText("");
+            inputValor.setText("");
+            
             inputCodigo.setEnabled(true);
             inputCpfMedico.setEnabled(false);
             btnCpfMedico.setEnabled(false);
@@ -401,6 +415,41 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Consulta cancelada com sucesso");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirmar Alteração") == 0) {
+
+            consulta.setData(inputData.getText());
+            consulta.setValor(Double.valueOf(inputValor.getText()));
+            daoConsulta.atualizarConsulta(consulta);
+
+            inputCodigo.setText("");
+            inputCpfMedico.setText("");
+            lblCpfMedico.setText("");
+            inputCpfPaciente.setText("");
+            lblCpfPaciente.setText("");
+            inputData.setText("");
+            inputValor.setText("");
+
+            inputCodigo.setEnabled(true);
+
+            inputCpfMedico.setEnabled(false);
+            btnCpfMedico.setEnabled(false);
+
+            inputCpfPaciente.setEnabled(false);
+            btnCpfPaciente.setEnabled(false);
+
+            inputData.setEnabled(false);
+            inputValor.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+
+            inputCodigo.requestFocus();
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments

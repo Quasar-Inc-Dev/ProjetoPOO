@@ -40,6 +40,10 @@ public class Consulta {
     public int getCodigo() {
         return codigo;
     }
+    
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public String getData() {
         return data;
