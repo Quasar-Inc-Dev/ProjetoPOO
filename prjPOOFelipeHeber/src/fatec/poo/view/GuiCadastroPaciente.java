@@ -341,7 +341,8 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        // conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\Aluno\\Documents\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
         daoPaciente = new DaoPaciente(conex.abrirConxao());
 
     }//GEN-LAST:event_formWindowOpened

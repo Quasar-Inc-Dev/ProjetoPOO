@@ -54,6 +54,11 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         inputCpfMedico = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblCpf.setText("CPF");
 
@@ -85,7 +90,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
         lblEspecialidade.setText("Especialidade");
 
-        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiologia", "Endocrinologia", "Nefrologia", "Pneumatologia" }));
         cbxEspecialidade.setEnabled(false);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/pesq.png"))); // NOI18N
@@ -99,6 +104,11 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -225,25 +235,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
 
-        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
-
-        if (cpfLimpo.length() < 11) {
-            JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
-            inputCpfMedico.requestFocus();
-            return;
-        }
-
-        medico = null;
-
-        if (!Medico.validarCpf(inputCpfMedico.getText())) {
-            JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-            inputCpfMedico.requestFocus();
-            return;
-        }
-
-        medico = daoMedico.consultarMedico(cpfLimpo);
-
-        if (medico == null) {
+        if (medico != null) {
             inputCpfMedico.setEnabled(false);
             inputNome.setEnabled(true);
             inputEndereco.setEnabled(true);
@@ -254,6 +246,23 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             btnConsultar.setEnabled(false);
             btnInserir.setEnabled(true);
         } else {
+            System.out.println("Usuario ja criado!");
+            String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+
+            if (cpfLimpo.length() < 11) {
+                JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
+                inputCpfMedico.requestFocus();
+                return;
+            }
+
+            medico = daoMedico.consultarMedico(cpfLimpo);
+
+            if (!Medico.validarCpf(inputCpfMedico.getText())) {
+                JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                inputCpfMedico.requestFocus();
+                return;
+            }
+            
             inputCpfMedico.setText(medico.getCpf());
             inputNome.setText(medico.getNome());
             inputEndereco.setText(medico.getEndereco());
@@ -276,6 +285,45 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             btnExcluir.setEnabled(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+        medico = new Medico(cpfLimpo, inputNome.getText(), inputCrm.getText(), cbxEspecialidade.getSelectedItem().toString());
+        medico.setEndereco(inputEndereco.getText());
+        medico.setTelefone(inputTelefone.getText());
+
+        daoMedico.inserirMedico(medico);
+
+        JOptionPane.showMessageDialog(this, "Inserido com sucesso!");
+
+        inputCpfMedico.setText("");
+        inputNome.setText("");
+        inputCrm.setText("");
+        inputEndereco.setText("");
+        inputTelefone.setText("");
+        cbxEspecialidade.removeAllItems();
+
+        inputCpfMedico.setEnabled(true);
+        inputCpfMedico.requestFocus();
+
+        inputCpfMedico.setEnabled(true);
+        inputNome.setEnabled(false);
+        inputEndereco.setEnabled(false);
+        inputTelefone.setEnabled(false);
+        inputCrm.setEnabled(false);
+        cbxEspecialidade.setEnabled(false);
+        
+        btnConsultar.setEnabled(true);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conex = new Conexao("", "");
+        conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\Aluno\\Documents\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        daoMedico = new DaoMedico(conex.abrirConxao());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
