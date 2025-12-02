@@ -55,6 +55,9 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -90,7 +93,6 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
         lblEspecialidade.setText("Especialidade");
 
-        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiologia", "Endocrinologia", "Nefrologia", "Pneumatologia" }));
         cbxEspecialidade.setEnabled(false);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/pesq.png"))); // NOI18N
@@ -113,10 +115,20 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/exit.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -226,7 +238,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_inputEnderecoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void inputCpfMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCpfMedicoActionPerformed
@@ -234,8 +246,10 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_inputCpfMedicoActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+        medico = daoMedico.consultarMedico(cpfLimpo);
 
-        if (medico != null) {
+        if (medico == null) {
             inputCpfMedico.setEnabled(false);
             inputNome.setEnabled(true);
             inputEndereco.setEnabled(true);
@@ -243,26 +257,14 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             inputCrm.setEnabled(true);
             cbxEspecialidade.setEnabled(true);
 
+            inputNome.requestFocus();
+
             btnConsultar.setEnabled(false);
             btnInserir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+
         } else {
-            System.out.println("Usuario ja criado!");
-            String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
-
-            if (cpfLimpo.length() < 11) {
-                JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
-                inputCpfMedico.requestFocus();
-                return;
-            }
-
-            medico = daoMedico.consultarMedico(cpfLimpo);
-
-            if (!Medico.validarCpf(inputCpfMedico.getText())) {
-                JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-                inputCpfMedico.requestFocus();
-                return;
-            }
-            
             inputCpfMedico.setText(medico.getCpf());
             inputNome.setText(medico.getNome());
             inputEndereco.setText(medico.getEndereco());
@@ -274,8 +276,8 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             inputNome.setEnabled(true);
             inputEndereco.setEnabled(true);
             inputTelefone.setEnabled(true);
-            inputCrm.setEnabled(true);
-            cbxEspecialidade.setEnabled(true);
+            inputCrm.setEnabled(false);
+            cbxEspecialidade.setEnabled(false);
 
             inputNome.requestFocus();
 
@@ -312,7 +314,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         inputTelefone.setEnabled(false);
         inputCrm.setEnabled(false);
         cbxEspecialidade.setEnabled(false);
-        
+
         btnConsultar.setEnabled(true);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
@@ -321,9 +323,66 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\Aluno\\Documents\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
         daoMedico = new DaoMedico(conex.abrirConxao());
+
+        cbxEspecialidade.removeAllItems();
+        cbxEspecialidade.addItem("Cardiologia");
+        cbxEspecialidade.addItem("Endocrinologia");
+        cbxEspecialidade.addItem("Nefrologia");
+        cbxEspecialidade.addItem("Pneumatologia");
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirmar Alteração?") == 0) {
+
+            medico.setNome(inputNome.getText());
+            medico.setEndereco(inputEndereco.getText());
+            medico.setTelefone(inputTelefone.getText());
+
+            daoMedico.atualizarMedico(medico);
+
+            JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
+
+            inputCpfMedico.setEnabled(true);
+            inputCpfMedico.requestFocus();
+
+            limparCampos();
+
+            inputNome.setEnabled(false);
+            inputEndereco.setEnabled(false);
+            inputTelefone.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirmar Exclusão?") == 0) {
+            daoMedico.deletarMedico(medico);
+
+            JOptionPane.showMessageDialog(this, "Excluido com sucesso!");
+
+            limparCampos();
+
+            inputNome.setEnabled(false);
+            inputEndereco.setEnabled(false);
+            inputTelefone.setEnabled(false);
+            inputCpfMedico.setEnabled(true);
+
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        conex.fecharConexao();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -383,4 +442,14 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private Medico medico = null;
     private Conexao conex = null;
     private Pessoa pessoa = null;
+
+    private void limparCampos() {
+        // Método auxiliar para limpar todos os campos
+        inputCpfMedico.setText("");
+        inputNome.setText("");
+        inputCrm.setText("");
+        inputEndereco.setText("");
+        inputTelefone.setText("");
+        // Não removemos itens do ComboBox, apenas limpamos o estado
+    }
 }

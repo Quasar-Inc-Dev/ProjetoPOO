@@ -73,7 +73,8 @@ public class DaoMedico {
         
         PreparedStatement ps = null;
         try {
-            ps = con.prepareStatement("SELECT * FROM tbMedico WHERE CPF = ?");
+            // AQUI, 'con' DEVE SER VÁLIDO. Se for null, o erro ocorre.
+            ps = con.prepareStatement("SELECT * FROM tbMedico WHERE CPF = ?"); 
             ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
             
@@ -82,6 +83,9 @@ public class DaoMedico {
                 m.setEndereco(rs.getString("ENDERECO"));
                 m.setTelefone(rs.getString("TELEFONE"));
             }
+            // Garante o fechamento do PreparedStatement e ResultSet
+            rs.close(); 
+            ps.close();
         } catch (SQLException ex){
             System.out.println(ex.toString());
         }
