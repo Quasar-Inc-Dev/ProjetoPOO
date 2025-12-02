@@ -39,21 +39,22 @@ public class DaoExame {
         }
     }
 
-    public void atualizarExame(Exame exame) {
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement("UPDATE tbExame SET CODIGO = ?, SET DESCRICAO = ?, SET DATA = ?, SET HORARIO = ?, SET VALOR = ? WHERE CODIGO = ?");
-            ps.setInt(1, exame.getCodigo());
-            ps.setString(2, exame.getDescricao());
-            ps.setString(3, exame.getData());
-            ps.setString(4, exame.getHorario());
-            ps.setDouble(5, exame.getValor());
+public void atualizarExame(Exame exame) {
+    PreparedStatement ps = null;
+    try {
+        ps = con.prepareStatement("UPDATE tbExame SET DESCRICAO = ?, DATA = ?, HORARIO = ?, VALOR = ? WHERE CODIGO = ?");
+        
+        ps.setString(1, exame.getDescricao());
+        ps.setString(2, exame.getData());    
+        ps.setString(3, exame.getHorario());   
+        ps.setDouble(4, exame.getValor());    
+        ps.setInt(5, exame.getCodigo());       
 
-            ps.execute();
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
+        ps.execute();
+    } catch (SQLException ex) {
+        System.out.println(ex.toString());
     }
+}
 
     public void deletarExame(Exame exame) {
         PreparedStatement ps = null;
