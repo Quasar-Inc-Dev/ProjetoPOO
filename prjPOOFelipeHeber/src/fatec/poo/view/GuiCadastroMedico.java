@@ -5,6 +5,13 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoMedico;
+import fatec.poo.model.Medico;
+import fatec.poo.model.Pessoa;
+import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author felip
@@ -16,6 +23,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
      */
     public GuiCadastroMedico() {
         initComponents();
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/fatec/poo/view/icons/LogoPokecenter.png")));
     }
 
     /**
@@ -32,12 +40,12 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        txtEndereco = new javax.swing.JTextField();
-        txtTelefone = new javax.swing.JTextField();
-        txtCRM = new javax.swing.JTextField();
+        inputNome = new javax.swing.JTextField();
+        inputEndereco = new javax.swing.JTextField();
+        inputTelefone = new javax.swing.JTextField();
+        inputCrm = new javax.swing.JTextField();
         lblEspecialidade = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxEspecialidade = new javax.swing.JComboBox<>();
         btnConsultar = new javax.swing.JButton();
         btnInserir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
@@ -57,43 +65,52 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
         jLabel4.setText("CRM");
 
-        txtNome.setEnabled(false);
-        txtNome.addActionListener(new java.awt.event.ActionListener() {
+        inputNome.setEnabled(false);
+        inputNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeActionPerformed(evt);
+                inputNomeActionPerformed(evt);
             }
         });
 
-        txtEndereco.setEnabled(false);
-        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
+        inputEndereco.setEnabled(false);
+        inputEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnderecoActionPerformed(evt);
+                inputEnderecoActionPerformed(evt);
             }
         });
 
-        txtTelefone.setEnabled(false);
+        inputTelefone.setEnabled(false);
 
-        txtCRM.setEnabled(false);
+        inputCrm.setEnabled(false);
 
         lblEspecialidade.setText("Especialidade");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setEnabled(false);
+        cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxEspecialidade.setEnabled(false);
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/pesq.png"))); // NOI18N
         btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
+        btnInserir.setEnabled(false);
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/exit.png"))); // NOI18N
         btnSair.setText("Sair");
+        btnSair.setEnabled(false);
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -105,6 +122,11 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        inputCpfMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputCpfMedicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,15 +144,15 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNome)
-                            .addComponent(txtEndereco)
-                            .addComponent(txtTelefone)
+                            .addComponent(inputNome)
+                            .addComponent(inputEndereco)
+                            .addComponent(inputTelefone)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCRM, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(inputCrm, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblEspecialidade)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cbxEspecialidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputCpfMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -157,21 +179,21 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCRM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputCrm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEspecialidade)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConsultar)
@@ -185,17 +207,75 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+    private void inputNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_inputNomeActionPerformed
 
-    private void txtEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnderecoActionPerformed
+    private void inputEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputEnderecoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEnderecoActionPerformed
+    }//GEN-LAST:event_inputEnderecoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void inputCpfMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCpfMedicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputCpfMedicoActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+
+        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+
+        if (cpfLimpo.length() < 11) {
+            JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            inputCpfMedico.requestFocus();
+            return;
+        }
+
+        medico = null;
+
+        if (!Medico.validarCpf(inputCpfMedico.getText())) {
+            JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+            inputCpfMedico.requestFocus();
+            return;
+        }
+
+        medico = daoMedico.consultarMedico(cpfLimpo);
+
+        if (medico == null) {
+            inputCpfMedico.setEnabled(false);
+            inputNome.setEnabled(true);
+            inputEndereco.setEnabled(true);
+            inputTelefone.setEnabled(true);
+            inputCrm.setEnabled(true);
+            cbxEspecialidade.setEnabled(true);
+
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(true);
+        } else {
+            inputCpfMedico.setText(medico.getCpf());
+            inputNome.setText(medico.getNome());
+            inputEndereco.setText(medico.getEndereco());
+            inputTelefone.setText(medico.getTelefone());
+            inputCrm.setText(medico.getCrm());
+            cbxEspecialidade.setSelectedItem(medico.getEspecialidade());
+
+            inputCpfMedico.setEnabled(false);
+            inputNome.setEnabled(true);
+            inputEndereco.setEnabled(true);
+            inputTelefone.setEnabled(true);
+            inputCrm.setEnabled(true);
+            cbxEspecialidade.setEnabled(true);
+
+            inputNome.requestFocus();
+
+            btnConsultar.setEnabled(false);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,17 +318,21 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnInserir;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> cbxEspecialidade;
     private javax.swing.JFormattedTextField inputCpfMedico;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField inputCrm;
+    private javax.swing.JTextField inputEndereco;
+    private javax.swing.JTextField inputNome;
+    private javax.swing.JTextField inputTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblEspecialidade;
-    private javax.swing.JTextField txtCRM;
-    private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+    private DaoMedico daoMedico = null;
+    private Medico medico = null;
+    private Conexao conex = null;
+    private Pessoa pessoa = null;
 }

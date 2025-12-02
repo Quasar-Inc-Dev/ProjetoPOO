@@ -5,6 +5,7 @@ package fatec.poo.model;
  * @author mhebe
  */
 public class Exame {
+
     private int codigo;
     private String descricao;
     private String data;
@@ -48,14 +49,19 @@ public class Exame {
     public String getDescricao() {
         return descricao;
     }
-    
+
     public Consulta getConsulta() {
         return consulta;
     }
-    
-    public void setConsulta(Consulta consulta){
+
+    public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
     }
-    
-    
+
+    public int getCodigoConsulta() {
+        if (consulta != null) {
+            return consulta.getCodigo(); // Assumindo que Consulta tem getCodigo()
+        }
+        return 0; // Ou lance uma exceção, dependendo da regra de negócio
+    }
 }
