@@ -11,6 +11,8 @@ import fatec.poo.control.DaoExame;
 import fatec.poo.model.Consulta;
 import fatec.poo.model.Exame;
 import java.awt.Toolkit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,17 +27,14 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     public GuiMarcarExame() {
         initComponents();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/fatec/poo/view/icons/LogoPokecenter.png")));
-        
 
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
         conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
-        
 
         java.sql.Connection connection = conex.abrirConxao();
         daoExame = new DaoExame(connection);
         daoConsulta = new DaoConsulta(connection);
-
 
         limparCampos();
     }
@@ -270,7 +269,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         try {
             int codigo = Integer.parseInt(inputCodigo.getText());
-            
+
             exame = daoExame.consultarExame(codigo);
 
             if (exame != null) {
@@ -279,7 +278,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
                     inputCodigoConsulta.setText(String.valueOf(consulta.getCodigo()));
                     inputMedico.setText(consulta.getMedico().getNome());
                 }
-                
+
                 inputDescricao.setText(exame.getDescricao());
                 inputData.setText(exame.getData());
                 inputHorario.setText(exame.getHorario());
@@ -287,13 +286,13 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
                 inputCodigo.setEnabled(false);
                 btnConsultar.setEnabled(false);
-                
+
                 inputDescricao.setEnabled(true);
                 inputData.setEnabled(true);
                 inputHorario.setEnabled(true);
                 txtValor.setEnabled(true);
-                
-                btnAlterar.setEnabled(true); 
+
+                btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
                 inputDescricao.requestFocus();
 
@@ -305,7 +304,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
                 inputCodigoConsulta.setEnabled(true);
                 btnCodigo.setEnabled(true);
-                
+
                 inputCodigoConsulta.requestFocus();
             }
 
@@ -346,9 +345,11 @@ public class GuiMarcarExame extends javax.swing.JFrame {
             int codExame = Integer.parseInt(inputCodigo.getText());
             double valor = Double.parseDouble(txtValor.getText());
             String horarioFormatado = inputHorario.getText();
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataExame = LocalDate.parse(inputData.getText(), formatador);
 
             exame = new Exame(codExame, inputDescricao.getText());
-            exame.setData(inputData.getText());
+            exame.setData(dataExame.toString());
             exame.setHorario(horarioFormatado.replaceAll("[^0-9]", ""));
             exame.setValor(valor);
 
@@ -400,11 +401,15 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(this, "Confirma alteração?") == JOptionPane.YES_OPTION) {
             try {
                 exame.setDescricao(inputDescricao.getText());
-                exame.setData(inputData.getText());
+
+                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataExame = LocalDate.parse(inputData.getText(), formatador);
+
+                exame.setData(dataExame.toString());
                 exame.setHorario(inputHorario.getText());
                 exame.setValor(Double.parseDouble(txtValor.getText()));
 
-                daoExame.atualizarExame(exame); 
+                daoExame.atualizarExame(exame);
 
                 JOptionPane.showMessageDialog(this, "Exame alterado com sucesso!");
                 limparCampos();
