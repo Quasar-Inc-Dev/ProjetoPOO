@@ -1,63 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package fatec.poo.model;
+    /*
+     * To change this license header, choose License Headers in Project Properties.
+     * To change this template file, choose Tools | Templates
+     * and open the template in the editor.
+     */
+    package fatec.poo.model;
 
-/**
- *
- * @author felip
- */
-public class Medicacao {
+    /**
+     *
+     * @author felip
+     */
+    public class Medicacao {
 
-    private String nome;
-    private String dosagem;
-    private int qtdeDias;
-    private Medico medico;
-    private Consulta consulta;
+        private String nome;
+        private String dosagem;
+        private int qtdeDias;
+        private Medico medico;
+        private Consulta consulta;
 
-    public Medicacao(String nome) {
-        this.nome = nome;
+        public Medicacao(String nome) {
+            this.nome = nome;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public String getDosagem() {
+            return dosagem;
+        }
+
+        public void setDosagem(String dosagem) {
+            this.dosagem = dosagem;
+        }
+
+        public int getQtdeDias() {
+            return qtdeDias;
+        }
+
+        public void setQtdeDias(int qtdeDias) {
+            this.qtdeDias = qtdeDias;
+        }
+
+        public Medico getMedico() {
+            return medico;
+        }
+
+        public void setMedico(Medico medico) {
+            this.medico = medico;
+        }
+
+        public Consulta getConsulta() {
+            return consulta;
+        }
+
+        public void setConsulta(Consulta consulta) {
+            this.consulta = consulta;
+        }
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDosagem() {
-        return dosagem;
-    }
-
-    public void setDosagem(String dosagem) {
-        this.dosagem = dosagem;
-    }
-
-    public int getQtdeDias() {
-        return qtdeDias;
-    }
-
-    public void setQtdeDias(int qtdeDias) {
-        this.qtdeDias = qtdeDias;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
-
-    public Consulta getConsulta() {
-        return consulta;
-    }
-
-    public void setConsulta(Consulta consulta) {
-        this.consulta = consulta;
-    }
-}

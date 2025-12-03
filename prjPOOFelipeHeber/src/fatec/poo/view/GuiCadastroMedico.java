@@ -42,8 +42,6 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         inputNome = new javax.swing.JTextField();
         inputEndereco = new javax.swing.JTextField();
-        inputTelefone = new javax.swing.JTextField();
-        inputCrm = new javax.swing.JTextField();
         lblEspecialidade = new javax.swing.JLabel();
         cbxEspecialidade = new javax.swing.JComboBox<>();
         btnConsultar = new javax.swing.JButton();
@@ -52,8 +50,15 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         inputCpfMedico = new javax.swing.JFormattedTextField();
+        inputTelefone = new javax.swing.JFormattedTextField();
+        inputCrm = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblCpf.setText("CPF");
 
@@ -79,10 +84,6 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             }
         });
 
-        inputTelefone.setEnabled(false);
-
-        inputCrm.setEnabled(false);
-
         lblEspecialidade.setText("Especialidade");
 
         cbxEspecialidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -99,18 +100,32 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         btnInserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/add.png"))); // NOI18N
         btnInserir.setText("Inserir");
         btnInserir.setEnabled(false);
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icons/exit.png"))); // NOI18N
         btnSair.setText("Sair");
-        btnSair.setEnabled(false);
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -127,6 +142,20 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                 inputCpfMedicoActionPerformed(evt);
             }
         });
+
+        try {
+            inputTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        inputTelefone.setEnabled(false);
+
+        try {
+            inputCrm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("######/UU")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        inputCrm.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,7 +175,6 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(inputNome)
                             .addComponent(inputEndereco)
-                            .addComponent(inputTelefone)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputCrm, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -155,7 +183,8 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                                 .addComponent(cbxEspecialidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputCpfMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(inputTelefone)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 28, Short.MAX_VALUE)
                         .addComponent(btnConsultar)
@@ -191,9 +220,9 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(inputCrm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEspecialidade)
-                    .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxEspecialidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputCrm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConsultar)
@@ -216,7 +245,8 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_inputEnderecoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
+        conex.fecharConexao();
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void inputCpfMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCpfMedicoActionPerformed
@@ -225,7 +255,10 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
 
-        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+        String cpfFormatado = inputCpfMedico.getText();
+        String cpfLimpo = cpfFormatado.replaceAll("[^0-9]", "");
+
+        medico = daoMedico.consultarMedico(cpfLimpo);
 
         if (cpfLimpo.length() < 11) {
             JOptionPane.showMessageDialog(this, "CPF incompleto!", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -233,15 +266,11 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             return;
         }
 
-        medico = null;
-
         if (!Medico.validarCpf(inputCpfMedico.getText())) {
             JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
             inputCpfMedico.requestFocus();
             return;
         }
-
-        medico = daoMedico.consultarMedico(cpfLimpo);
 
         if (medico == null) {
             inputCpfMedico.setEnabled(false);
@@ -251,8 +280,13 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             inputCrm.setEnabled(true);
             cbxEspecialidade.setEnabled(true);
 
+            inputNome.requestFocus();
+
             btnConsultar.setEnabled(false);
             btnInserir.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+
         } else {
             inputCpfMedico.setText(medico.getCpf());
             inputNome.setText(medico.getNome());
@@ -276,6 +310,106 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
             btnExcluir.setEnabled(true);
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
+        String cpfLimpo = inputCpfMedico.getText().replaceAll("[^0-9]", "");
+        String foneLimpo = inputTelefone.getText().replaceAll("[^0-9]", "");
+        String crmLimpo = inputCrm.getText().replaceAll("[^0-9]", "");
+
+        medico = new Medico(cpfLimpo, inputNome.getText(), crmLimpo, cbxEspecialidade.getSelectedItem().toString());
+        medico.setEndereco(inputEndereco.getText());
+        medico.setTelefone(foneLimpo);
+
+        daoMedico.inserirMedico(medico);
+
+        JOptionPane.showMessageDialog(this, "Inserido com sucesso!");
+
+        limparCampos();
+
+        inputCpfMedico.setEnabled(true);
+        inputCpfMedico.requestFocus();
+
+        inputNome.setEnabled(false);
+        inputEndereco.setEnabled(false);
+        inputTelefone.setEnabled(false);
+        inputCrm.setEnabled(false);
+        cbxEspecialidade.setEnabled(false);
+
+        btnConsultar.setEnabled(true);
+        btnInserir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (medico != null && JOptionPane.showConfirmDialog(null, "Confirmar Alteração?") == 0) {
+
+            medico.setNome(inputNome.getText());
+            medico.setEndereco(inputEndereco.getText());
+            medico.setTelefone(inputTelefone.getText());
+
+            JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
+
+            daoMedico.atualizarMedico(medico);
+
+            limparCampos();
+
+            inputCpfMedico.setEnabled(true);
+            inputCpfMedico.requestFocus();
+
+            inputNome.setEnabled(false);
+            inputEndereco.setEnabled(false);
+            inputTelefone.setEnabled(false);
+            inputCrm.setEnabled(false);
+            cbxEspecialidade.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conex = new Conexao("", "");
+        conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        daoMedico = new DaoMedico(conex.abrirConxao());
+        cbxEspecialidade.removeAllItems();
+        cbxEspecialidade.addItem("Cardiologia");
+        cbxEspecialidade.addItem("Endocrinologia");
+        cbxEspecialidade.addItem("Nefrologia");
+        cbxEspecialidade.addItem("Pneumatologia");
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (medico != null && JOptionPane.showConfirmDialog(null, "Confirmar Exclusão?") == 0) {
+
+            medico.setNome(inputNome.getText());
+            medico.setEndereco(inputEndereco.getText());
+            medico.setTelefone(inputTelefone.getText());
+
+            JOptionPane.showMessageDialog(this, "Excluido com sucesso!");
+
+            daoMedico.deletarMedico(medico);
+
+            limparCampos();
+
+            inputCpfMedico.setEnabled(true);
+            inputCpfMedico.requestFocus();
+
+            inputNome.setEnabled(false);
+            inputEndereco.setEnabled(false);
+            inputTelefone.setEnabled(false);
+            inputCrm.setEnabled(false);
+            cbxEspecialidade.setEnabled(false);
+
+            btnConsultar.setEnabled(true);
+            btnInserir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,6 +446,16 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         });
     }
 
+    private void limparCampos() {
+        // Método auxiliar para limpar todos os campos
+        inputCpfMedico.setText("");
+        inputNome.setText("");
+        inputCrm.setText("");
+        inputEndereco.setText("");
+        inputTelefone.setText("");
+        // Não removemos itens do ComboBox, apenas limpamos o estado
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnConsultar;
@@ -320,10 +464,10 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> cbxEspecialidade;
     private javax.swing.JFormattedTextField inputCpfMedico;
-    private javax.swing.JTextField inputCrm;
+    private javax.swing.JFormattedTextField inputCrm;
     private javax.swing.JTextField inputEndereco;
     private javax.swing.JTextField inputNome;
-    private javax.swing.JTextField inputTelefone;
+    private javax.swing.JFormattedTextField inputTelefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

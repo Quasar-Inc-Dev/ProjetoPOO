@@ -57,11 +57,15 @@ public class Exame {
     public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
     }
-
+    
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
     public int getCodigoConsulta() {
         if (consulta != null) {
-            return consulta.getCodigo(); // Assumindo que Consulta tem getCodigo()
+            return consulta.getCodigo();
         }
-        return 0; // Ou lance uma exceção, dependendo da regra de negócio
+        return 0;
     }
 }

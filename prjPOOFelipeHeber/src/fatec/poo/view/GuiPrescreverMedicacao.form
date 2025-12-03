@@ -41,15 +41,15 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtNome" max="32767" attributes="0"/>
-                          <Component id="txtCodigo" max="32767" attributes="0"/>
-                          <Component id="txtDosagem" pref="136" max="32767" attributes="0"/>
+                          <Component id="inputNome" max="32767" attributes="0"/>
+                          <Component id="inputCodigo" max="32767" attributes="0"/>
+                          <Component id="inputDosagem" pref="136" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblDias" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtDias" pref="135" max="32767" attributes="0"/>
+                      <Component id="inputQtDias" pref="135" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -57,7 +57,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="txtMedico" max="32767" attributes="0"/>
+              <Component id="inputMedico" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -81,25 +81,25 @@
               <EmptySpace pref="24" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inputNome" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inputCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtMedico" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inputMedico" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblDosagem" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtDosagem" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inputDosagem" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblDias" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtDias" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="inputQtDias" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -120,14 +120,14 @@
         <Property name="text" type="java.lang.String" value="Nome"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNome">
+    <Component class="javax.swing.JTextField" name="inputNome">
     </Component>
     <Component class="javax.swing.JLabel" name="lblCodigo">
       <Properties>
         <Property name="text" type="java.lang.String" value="C&#xf3;digo Consulta"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtCodigo">
+    <Component class="javax.swing.JTextField" name="inputCodigo">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -137,7 +137,7 @@
         <Property name="text" type="java.lang.String" value="Dosagem"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDosagem">
+    <Component class="javax.swing.JTextField" name="inputDosagem">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -147,7 +147,7 @@
         <Property name="text" type="java.lang.String" value="Quantidade Dias"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDias">
+    <Component class="javax.swing.JTextField" name="inputQtDias">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -156,13 +156,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCodigoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="M&#xe9;dico"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtMedico">
+    <Component class="javax.swing.JTextField" name="inputMedico">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -174,6 +177,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Consultar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnInserir">
       <Properties>
@@ -181,7 +187,11 @@
           <Image iconType="3" name="/fatec/poo/view/icons/add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Inserir"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInserirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAlterar">
       <Properties>
@@ -189,7 +199,11 @@
           <Image iconType="3" name="/fatec/poo/view/icons/Alterar.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Alterar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
@@ -197,7 +211,11 @@
           <Image iconType="3" name="/fatec/poo/view/icons/Eraser.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Excluir"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSair">
       <Properties>
@@ -206,6 +224,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
