@@ -19,9 +19,8 @@ import java.sql.SQLException;
 public class DaoExame {
 
     private Connection con;
-    private DaoConsulta daoConsulta; 
-    
-    
+    private DaoConsulta daoConsulta;
+
     public DaoExame(Connection con) {
         this.con = con;
         this.daoConsulta = new DaoConsulta(con);
@@ -36,8 +35,8 @@ public class DaoExame {
             ps.setString(3, exame.getData());
             ps.setString(4, exame.getHorario());
             ps.setDouble(5, exame.getValor());
-            
-            ps.setInt(6, exame.getConsulta().getCodigo()); 
+
+            ps.setInt(6, exame.getConsulta().getCodigo());
 
             ps.execute();
         } catch (SQLException ex) {
@@ -49,12 +48,12 @@ public class DaoExame {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("UPDATE tbExame SET DESCRICAO = ?, DATA = ?, HORARIO = ?, VALOR = ? WHERE CODIGO = ?");
-            
+
             ps.setString(1, exame.getDescricao());
-            ps.setString(2, exame.getData());    
-            ps.setString(3, exame.getHorario());    
-            ps.setDouble(4, exame.getValor());    
-            ps.setInt(5, exame.getCodigo());        
+            ps.setString(2, exame.getData());
+            ps.setString(3, exame.getHorario());
+            ps.setDouble(4, exame.getValor());
+            ps.setInt(5, exame.getCodigo());
 
             ps.execute();
         } catch (SQLException ex) {
@@ -73,35 +72,34 @@ public class DaoExame {
             System.out.println(ex.toString());
         }
     }
-    
-    public Exame consultarExame (int codigo) {
+
+    public Exame consultarExame(int codigo) {
         Exame e = null;
-        
+
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("SELECT * FROM tbExame WHERE CODIGO = ?");
             ps.setInt(1, codigo);
             ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()) {
+
+            if (rs.next()) {
                 e = new Exame(rs.getInt("CODIGO"), rs.getString("DESCRICAO"));
                 e.setData(rs.getString("DATA"));
                 e.setHorario(rs.getString("HORARIO"));
                 e.setValor(rs.getDouble("VALOR"));
 
-                int codigoConsulta = rs.getInt("CONSULTA"); 
-                
+                int codigoConsulta = rs.getInt("CONSULTA");
+
                 Consulta consulta = daoConsulta.consultarConsulta(codigoConsulta);
-                
-              
+
                 if (consulta != null) {
-                    e.setConsulta(consulta); 
+                    e.setConsulta(consulta);
                 }
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        
+
         return e;
     }
 }

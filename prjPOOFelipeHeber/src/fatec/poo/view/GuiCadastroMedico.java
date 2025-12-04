@@ -10,7 +10,6 @@ import fatec.poo.control.DaoMedico;
 import fatec.poo.model.Medico;
 import fatec.poo.model.Pessoa;
 import java.awt.Toolkit;
-import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -152,7 +151,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         inputTelefone.setEnabled(false);
 
         try {
-            inputCrm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("######/UU")));
+            inputCrm.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -374,7 +373,7 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
         daoMedico = new DaoMedico(conex.abrirConxao());
         cbxEspecialidade.removeAllItems();
         cbxEspecialidade.addItem("Cardiologia");
@@ -412,49 +411,12 @@ public class GuiCadastroMedico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiCadastroMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiCadastroMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiCadastroMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiCadastroMedico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GuiCadastroMedico().setVisible(true);
-            }
-        });
-    }
-
     private void limparCampos() {
-        // Método auxiliar para limpar todos os campos
         inputCpfMedico.setText("");
         inputNome.setText("");
         inputCrm.setText("");
         inputEndereco.setText("");
         inputTelefone.setText("");
-        // Não removemos itens do ComboBox, apenas limpamos o estado
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

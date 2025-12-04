@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -105,9 +106,9 @@ public class DaoConsulta {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                java.sql.Date d = rs.getDate("DATA_NASCIMENTO");
-                LocalDate dataNasc = (d != null) ? d.toLocalDate() : null;
-                paciente = new Paciente(rs.getString("CPF"), rs.getString("NOME"), dataNasc);
+                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataNascimento = LocalDate.parse(rs.getString("DATA_NASCIMENTO"), formatador);
+                paciente = new Paciente(rs.getString("CPF"), rs.getString("NOME"), dataNascimento);
                 paciente.setEndereco(rs.getString("ENDERECO"));
                 paciente.setTelefone(rs.getString("TELEFONE"));
                 paciente.setAltura(rs.getDouble("ALTURA"));
@@ -120,26 +121,26 @@ public class DaoConsulta {
             System.out.println(ex.toString());
 
         }
-       return paciente;
-
+        return paciente;
     }
+
     public Paciente buscarPacienteDaConsulta(int codigoConsulta) {
         Paciente p = null;
         PreparedStatement ps = null;
-        
+
         try {
             ps = con.prepareStatement("SELECT PACIENTE FROM tbConsulta WHERE CODIGO = ?");
             ps.setInt(1, codigoConsulta);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 String cpfPaciente = rs.getString("PACIENTE");
                 p = consultarPaciente(cpfPaciente);
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
         return p;
-    }    
+    }
 }

@@ -18,12 +18,12 @@ import java.sql.SQLException;
  */
 public class DaoMedicacao {
 
- private Connection con;
+    private Connection con;
     private DaoConsulta daoConsulta;
 
     public DaoMedicacao(Connection con) {
         this.con = con;
-        this.daoConsulta = new DaoConsulta(con); 
+        this.daoConsulta = new DaoConsulta(con);
     }
 
     public void inserirMedicacao(Medicacao medicacao) {
@@ -34,7 +34,7 @@ public class DaoMedicacao {
             ps.setString(1, medicacao.getNome());
             ps.setString(2, medicacao.getDosagem());
             ps.setInt(3, medicacao.getQtdeDias());
-            ps.setInt(4, medicacao.getConsulta().getCodigo()); 
+            ps.setInt(4, medicacao.getConsulta().getCodigo());
 
             ps.execute();
         } catch (SQLException ex) {
@@ -49,7 +49,7 @@ public class DaoMedicacao {
 
             ps.setString(1, medicacao.getDosagem());
             ps.setInt(2, medicacao.getQtdeDias());
-            ps.setString(3, medicacao.getNome()); 
+            ps.setString(3, medicacao.getNome());
 
             ps.execute();
         } catch (SQLException ex) {
@@ -82,13 +82,13 @@ public class DaoMedicacao {
                 m = new Medicacao(rs.getString("NOME"));
                 m.setDosagem(rs.getString("DOSAGEM"));
                 m.setQtdeDias(rs.getInt("QTD_DIAS"));
-                
+
                 int codigoConsulta = rs.getInt("CONSULTA");
                 Consulta consulta = daoConsulta.consultarConsulta(codigoConsulta);
 
                 if (consulta != null) {
                     m.setConsulta(consulta);
-                    m.setMedico(consulta.getMedico()); 
+                    m.setMedico(consulta.getMedico());
                 }
             }
 

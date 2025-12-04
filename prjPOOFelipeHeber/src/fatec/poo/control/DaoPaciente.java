@@ -18,77 +18,79 @@ import java.time.format.DateTimeFormatter;
  * @author mhebe
  */
 public class DaoPaciente {
+
     private Connection con;
 
     public DaoPaciente(Connection con) {
         this.con = con;
     }
-    
-    public void inserirPaciente (Paciente paciente){
+
+    public void inserirPaciente(Paciente paciente) {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("INSERT INTO tbPaciente(CPF, NOME, ENDERECO, TELEFONE, DATA_NASCIMENTO, ALTURA, PESO) VALUES(?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, paciente.getCpf());
             ps.setString(2, paciente.getNome());
             ps.setString(3, paciente.getEndereco());
-            ps.setString(4, paciente.getTelefone());   
-            ps.setDate(5, java.sql.Date.valueOf(paciente.getDataNascimento()));
+            ps.setString(4, paciente.getTelefone());
+            ps.setString(5, paciente.getDataNascimento());
             ps.setDouble(6, paciente.getAltura());
             ps.setDouble(7, paciente.getPeso());
-            
+
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
     }
-    
-    public void atualizarPaciente (Paciente paciente) {
+
+    public void atualizarPaciente(Paciente paciente) {
         PreparedStatement ps = null;
-        try{
+        try {
             ps = con.prepareStatement("UPDATE tbPaciente SET NOME = ?, ENDERECO = ?, TELEFONE = ?, DATA_NASCIMENTO = ?, ALTURA = ?, PESO = ? WHERE CPF = ?");
             ps.setString(1, paciente.getNome());
             ps.setString(2, paciente.getEndereco());
             ps.setString(3, paciente.getTelefone());
-            ps.setDate(4, java.sql.Date.valueOf(paciente.getDataNascimento()));
+            ps.setString(4, paciente.getDataNascimento());
             ps.setDouble(5, paciente.getAltura());
             ps.setDouble(6, paciente.getPeso());
             ps.setString(7, paciente.getCpf());
-            
+
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
     }
-    
-    public void deletarPaciente (Paciente paciente) {
+
+    public void deletarPaciente(Paciente paciente) {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("DELETE FROM tbPaciente WHERE CPF = ?");
             ps.setString(1, paciente.getCpf());
-            
+
             ps.execute();
             ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
     }
-    
-    public Paciente consultarPaciente (String cpf) {
+
+    public Paciente consultarPaciente(String cpf) {
         Paciente p = null;
-        
+
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement("SELECT * FROM tbPaciente WHERE CPF = ?");
             ps.setString(1, cpf);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
-                java.sql.Date d = rs.getDate("DATA_NASCIMENTO");
-                LocalDate dataNasc = (d != null) ? d.toLocalDate() : null;
-                
-                p = new Paciente(rs.getString("CPF"), rs.getString("NOME"), dataNasc);
+
+                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataNascimento = LocalDate.parse(rs.getString("DATA_NASCIMENTO"), formatador);
+
+                p = new Paciente(rs.getString("CPF"), rs.getString("NOME"), dataNascimento);
                 p.setEndereco(rs.getString("ENDERECO"));
                 p.setTelefone(rs.getString("TELEFONE"));
                 p.setAltura(rs.getDouble("ALTURA"));

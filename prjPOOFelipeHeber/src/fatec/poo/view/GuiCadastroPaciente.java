@@ -169,27 +169,28 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addComponent(jLabel6)
                         .addComponent(jLabel7)))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(inputCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                        .addComponent(inputTelefone)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(inputPeso, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inputAltura, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inputDataNascimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(inputEndereco, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inputNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnInserir)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAlterar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExcluir)))
                         .addGap(18, 18, 18)
-                        .addComponent(btnInserir)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAlterar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSair))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inputAltura)
-                            .addComponent(inputPeso)
-                            .addComponent(inputNome, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                            .addComponent(inputEndereco)
-                            .addComponent(inputCpf)
-                            .addComponent(inputDataNascimento)
-                            .addComponent(inputTelefone))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addComponent(btnSair)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,7 +322,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
         inputCpf.setEnabled(true);
         inputCpf.requestFocus();
-        
+
         btnAlterar.setEnabled(false);
         btnConsultar.setEnabled(true);
 
@@ -332,7 +333,7 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
         inputDataNascimento.setEnabled(false);
         inputAltura.setEnabled(false);
         inputPeso.setEnabled(false);
-        
+
         btnInserir.setEnabled(false);
         btnConsultar.setEnabled(true);
         btnAlterar.setEnabled(false);
@@ -387,10 +388,10 @@ public class GuiCadastroPaciente extends javax.swing.JFrame {
 
             inputCpf.setEnabled(true);
             inputCpf.requestFocus();
-        }
 
-        btnAlterar.setEnabled(false);
-        btnConsultar.setEnabled(true);
+            btnAlterar.setEnabled(false);
+            btnConsultar.setEnabled(true);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed

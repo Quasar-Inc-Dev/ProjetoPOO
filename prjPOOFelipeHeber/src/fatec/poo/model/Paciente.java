@@ -1,6 +1,7 @@
 package fatec.poo.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
@@ -8,18 +9,18 @@ import java.util.ArrayList;
  *
  * @author mhebe
  */
-public class Paciente extends Pessoa{
+public class Paciente extends Pessoa {
+
     private LocalDate dataNascimento;
     private double altura;
     private double peso;
     private ArrayList<Consulta> consultas;
- 
 
     public Paciente(String cpf, String nome, LocalDate dataNascimento) {
         super(cpf, nome);
         this.dataNascimento = dataNascimento;
         consultas = new ArrayList<Consulta>();
- 
+
     }
 
     public double getAltura() {
@@ -39,23 +40,24 @@ public class Paciente extends Pessoa{
     }
 
     public String getDataNascimento() {
-        return dataNascimento.toString();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dataNascimento.format(dtf);
     }
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-    
-    public double calcIMC(){
+
+    public double calcIMC() {
         return peso / (altura * altura);
     }
-    
-    public int calcIdade(LocalDate dataAtual){
+
+    public int calcIdade(LocalDate dataAtual) {
         return (int) ChronoUnit.YEARS.between(dataNascimento, LocalDate.now());
     }
-    
-    public void addConsulta(Consulta c){
+
+    public void addConsulta(Consulta c) {
         consultas.add(c);
     }
-    
+
 }

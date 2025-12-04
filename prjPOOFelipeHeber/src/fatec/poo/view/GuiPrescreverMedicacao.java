@@ -28,7 +28,7 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
 
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
 
         java.sql.Connection connection = conex.abrirConxao();
         daoMedicacao = new DaoMedicacao(connection);
@@ -238,11 +238,16 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
             inputNome.setEnabled(false);
             btnConsultar.setEnabled(false);
 
-            inputDosagem.setEnabled(false);
-            inputCodigo.setEnabled(true);
+            inputDosagem.setEnabled(true);
+            inputQtDias.setEnabled(true);
 
+            btnCodigo.setEnabled(false);
+            inputCodigo.setEnabled(false);
+
+            btnInserir.setEnabled(false);
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
+
             inputDosagem.requestFocus();
 
         } else {
@@ -320,14 +325,15 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
             try {
                 medicacao.setDosagem(inputDosagem.getText());
                 medicacao.setQtdeDias(Integer.parseInt(inputQtDias.getText()));
-
+                medicacao.setConsulta(consulta);
                 daoMedicacao.atualizarMedicacao(medicacao);
 
                 JOptionPane.showMessageDialog(this, "Medicação alterada com sucesso!");
                 limparCampos();
 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Quantidade de dias inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Quantidade de dias inválida. Digite apenas números.", "Erro", JOptionPane.ERROR_MESSAGE);
+                inputQtDias.requestFocus();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Erro ao alterar: " + e.getMessage(), "Erro de Banco de Dados", JOptionPane.ERROR_MESSAGE);
             }
@@ -347,40 +353,6 @@ public class GuiPrescreverMedicacao extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiPrescreverMedicacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiPrescreverMedicacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiPrescreverMedicacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiPrescreverMedicacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GuiPrescreverMedicacao().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;

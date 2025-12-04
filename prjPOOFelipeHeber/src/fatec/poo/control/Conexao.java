@@ -46,7 +46,7 @@ public class Conexao {
             connection.close();
             System.out.println("{Conexão encerrada com sucesso}");
         } catch (Exception ex) {
-            System.out.println("Fala em encerrar a conexão");
+            System.out.println("Falha em encerrar a conexão");
             System.out.println(ex.toString() + ex.getMessage());
         }
     }

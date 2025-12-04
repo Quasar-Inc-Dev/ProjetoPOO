@@ -30,7 +30,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
 
         java.sql.Connection connection = conex.abrirConxao();
         daoExame = new DaoExame(connection);
@@ -301,7 +301,6 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
                 inputCodigo.setEnabled(false);
                 btnConsultar.setEnabled(false);
-
                 inputCodigoConsulta.setEnabled(true);
                 btnCodigo.setEnabled(true);
 
@@ -323,7 +322,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conex = new Conexao("", "");
         conex.setDriver("net.ucanaccess.jdbc.UcanaccessDriver");
-        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\felip\\OneDrive\\Documentos\\Faculdade\\Quarto semestre\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
+        conex.setConnectionString("jdbc:ucanaccess://C:\\Users\\mhebe\\OneDrive\\Documentos\\NetBeansProjects\\ProjetoPOO\\prjPOOFelipeHeber\\src\\fatec\\poo\\database\\clincPkCenter.accdb");
     }//GEN-LAST:event_formWindowOpened
 
     private void inputCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCodigoActionPerformed
@@ -345,11 +344,8 @@ public class GuiMarcarExame extends javax.swing.JFrame {
             int codExame = Integer.parseInt(inputCodigo.getText());
             double valor = Double.parseDouble(txtValor.getText());
             String horarioFormatado = inputHorario.getText();
-            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataExame = LocalDate.parse(inputData.getText(), formatador);
-
             exame = new Exame(codExame, inputDescricao.getText());
-            exame.setData(dataExame.toString());
+            exame.setData(inputData.getText());
             exame.setHorario(horarioFormatado.replaceAll("[^0-9]", ""));
             exame.setValor(valor);
 
@@ -401,11 +397,7 @@ public class GuiMarcarExame extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(this, "Confirma alteração?") == JOptionPane.YES_OPTION) {
             try {
                 exame.setDescricao(inputDescricao.getText());
-
-                DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate dataExame = LocalDate.parse(inputData.getText(), formatador);
-
-                exame.setData(dataExame.toString());
+                exame.setData(inputData.getText());
                 exame.setHorario(inputHorario.getText());
                 exame.setValor(Double.parseDouble(txtValor.getText()));
 
@@ -422,46 +414,12 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (JOptionPane.showConfirmDialog(this, "Confirma exclusão?") == JOptionPane.YES_OPTION) {
-            daoExame.deletarExame(exame); // Você precisará criar este método no DAO
+            daoExame.deletarExame(exame);
             JOptionPane.showMessageDialog(this, "Exame excluído!");
             limparCampos();
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiMarcarExame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiMarcarExame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiMarcarExame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiMarcarExame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GuiMarcarExame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -502,8 +460,6 @@ public class GuiMarcarExame extends javax.swing.JFrame {
 
         exame = null;
         consulta = null;
-
-        // Estado inicial: Apenas Código do Exame habilitado
         inputCodigo.setEnabled(true);
         inputCodigo.requestFocus();
 
