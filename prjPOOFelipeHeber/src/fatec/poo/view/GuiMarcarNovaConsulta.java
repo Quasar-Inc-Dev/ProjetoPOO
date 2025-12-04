@@ -300,6 +300,7 @@ public class GuiMarcarNovaConsulta extends javax.swing.JFrame {
             inputCpfMedico.setEnabled(true);
             btnCpfMedico.setEnabled(true);
             inputCpfMedico.requestFocus();
+            btnConsultar.setEnabled(false);
         } else {
             inputCpfMedico.setText(consulta.getMedico().getCpf());
             lblCpfMedico.setText(consulta.getMedico().getNome());
